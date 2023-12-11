@@ -55,14 +55,14 @@ public class Board {
         }
 
         if (matrix[guardX][guardY] == Location.BOX.getValue()) {
-            int newBoxX = boxX + (guardX - this.guardX);
-            int newBoxY = boxY + (guardY - this.guardY);
+            int newBoxX = this.boxX + (guardX - this.guardX);
+            int newBoxY = this.boxY + (guardY - this.guardY);
 
             if (matrix[newBoxX][newBoxY] != Location.WALL.getValue() && matrix[newBoxX][newBoxY] != Location.BOX.getValue()) {
                 matrix[newBoxX][newBoxY] = Location.BOX.getValue();
-                matrix[boxX][boxY] = Location.FLOOR.getValue();
-                boxX = newBoxX;
-                boxY = newBoxY;
+                matrix[this.boxX][this.boxY] = Location.FLOOR.getValue();
+                this.boxX = newBoxX;
+                this.boxY = newBoxY;
             } else {
                 return;
             }

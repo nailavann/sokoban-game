@@ -1,16 +1,23 @@
 public enum Direction {
-    UP(1),
-    DOWN(2),
-    LEFT(3),
-    RIGHT(4),
-    INVALID(5);
-    private final int value;
+    UP(-1, 0),
+    DOWN(1, 0),
+    LEFT(0, -1),
+    RIGHT(0, 1),
+    INVALID(0,0);
 
-    Direction(int value) {
-        this.value = value;
+    private final int deltaX;
+    private final int deltaY;
+
+    Direction(int deltaX, int deltaY) {
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
     }
 
-    public int getValue() {
-        return value;
+    public int getDeltaX() {
+        return deltaX;
+    }
+
+    public int getDeltaY() {
+        return deltaY;
     }
 }

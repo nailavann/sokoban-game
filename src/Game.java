@@ -4,18 +4,23 @@ public class Game {
     private Board board;
 
     public Game(int[][] matrix) {
-        board = new Board();
-        board.loadBoard(matrix);
+        this.board = new Board(matrix);
     }
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
         do {
-            board.showBoard();
+            this.board.showBoard();
             Direction move = userSelectedChoice(scanner);
             this.board.moveGuard(move);
             System.out.println("Score: " + Board.score);
-        } while (!this.board.isFinish());
+        } while (this.board.isFinish() != 2);
+
+        System.out.println();
+        System.out.println("----------------------------------------------");
+        System.out.println();
+        System.out.println("Congratulations!");
+        System.out.println("Score: " + Board.score);
     }
 
     private Direction userSelectedChoice(Scanner console) {

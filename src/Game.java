@@ -14,7 +14,7 @@ public class Game {
             Direction move = userSelectedChoice(scanner);
             this.board.moveGuard(move);
             System.out.println("Score: " + Board.score);
-        } while (this.board.isFinish() != 2);
+        } while (this.board.isFinish() != this.board.getBoxes().size());
 
         System.out.println();
         System.out.println("----------------------------------------------");

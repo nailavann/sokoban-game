@@ -7,4 +7,3 @@ The player moves around using the arrow keys, and can push a box by moving into 
 
 ![Sokoban_ani](https://github.com/nailavann/sokoban-game/assets/74551108/c5269a13-e783-4f1e-93df-c95cb5ccaa7f)
 
-![sokoban](https://github.com/nailavann/sokoban-game/assets/74551108/80bc8085-5e0f-4f60-a78c-f57cb6c45a8e)

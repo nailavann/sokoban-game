@@ -2,39 +2,23 @@ import java.util.Scanner;
 
 public class Game {
     private Board board;
+    private GameManager gameManager;
 
     public Game(int[][] matrix) {
         this.board = new Board(matrix);
+        this.gameManager = new GameManager(this.board);
     }
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
         do {
             this.board.showBoard();
-            Direction move = userSelectedChoice(scanner);
-            this.board.moveGuard(move);
-            System.out.println("Score: " + Board.score);
-        } while (this.board.isFinish() != this.board.getBoxes().size());
+            Direction move = this.gameManager.userSelectedChoice(scanner);
+            this.gameManager.moveGuard(move);
+            System.out.println("Score: " + GameManager.score);
+        } while (this.gameManager.isFinish() != this.board.getGoals().size());
 
-        System.out.println();
-        System.out.println("----------------------------------------------");
-        System.out.println();
-        System.out.println("Congratulations!");
-        System.out.println("Score: " + Board.score);
+        this.gameManager.gameEndMessage();
     }
-
-    private Direction userSelectedChoice(Scanner console) {
-        System.out.print("Direction (W-A-S-D) : ");
-        char choice = console.next().charAt(0);
-
-        return switch (choice) {
-            case 'w', 'W' -> Direction.UP;
-            case 's', 'S' -> Direction.DOWN;
-            case 'a', 'A' -> Direction.LEFT;
-            case 'd', 'D' -> Direction.RIGHT;
-            default -> Direction.INVALID;
-        };
-    }
-
 
 }

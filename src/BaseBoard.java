@@ -18,9 +18,9 @@ public class BaseBoard {
 
 
     public void showBoard() {
-        for (int x = 0; x < this.getMatrix().length; x++) {
-            for (int y = 0; y < this.getMatrix()[x].length; y++) {
-                System.out.print(this.getMatrix()[x][y] + " ");
+        for (int x = 0; x < this.matrix.length; x++) {
+            for (int y = 0; y < this.matrix[x].length; y++) {
+                System.out.print(this.matrix[x][y] + " ");
             }
             System.out.println();
         }
@@ -45,10 +45,9 @@ public class BaseBoard {
                 matrix[x][y] = board[x][y];
             }
         }
-    }
 
-    public int[][] getMatrix() {
-        return matrix;
+        System.out.println("Box count: " + this.getBoxes().size());
+        System.out.println("Goal count: " + this.getGoals().size());
     }
 
     public Guard getGuard() {
@@ -63,13 +62,6 @@ public class BaseBoard {
         return goals;
     }
 
-    public ArrayList<Floor> getFloors() {
-        return floors;
-    }
-
-    public ArrayList<Wall> getWalls() {
-        return walls;
-    }
 
     public void setMatrixLocation(int x ,int y,Location location) {
         this.matrix[x][y] = location.getValue();

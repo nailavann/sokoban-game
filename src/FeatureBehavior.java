@@ -1,4 +1,4 @@
 public interface FeatureBehavior {
 
-    void applyFeature(Board board, Direction move);
+    void applyFeature(GameManager manager, Direction move);
 }

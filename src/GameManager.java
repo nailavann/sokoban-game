@@ -1,14 +1,24 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameManager {
 
-    private Board board;
+    public Board board;
 
     public static int score = 0;
+
+    public int featureScore = 0;
+
+    public boolean hasSprint = false; //sprint feature
+
+    public boolean hasSkateBoard = false; //skateboard feature
+
+    private FeatureBehavior featureBehavior;
 
     public GameManager(Board board) {
         this.board = board;
     }
+
     public Direction userSelectedChoice(Scanner console) {
         System.out.print("Direction (W-A-S-D) : ");
         char choice = console.next().charAt(0);
@@ -23,15 +33,39 @@ public class GameManager {
     }
 
     public void moveGuard(Direction move) {
-        int newGuardX = this.board.getGuard().getX() + move.getDeltaX();
-        int newGuardY = this.board.getGuard().getY() + move.getDeltaY();
+        if (this.hasSprint) {
+            //sprint feature *2 step
+            this.featureBehavior = new SprintFeature();
+        } else if (this.hasSkateBoard) {
+            //skateboard feature
+            this.featureBehavior = new SkateBoardFeature();
+        } else {
+            //not feature
+            this.matrixPositionChange(this.board.getGuard().getX() + move.getDeltaX(), this.board.getGuard().getY() + move.getDeltaY());
+        }
 
-        this.matrixPositionChange(newGuardX, newGuardY);
+        if (this.featureBehavior != null) {
+            this.featureBehavior.applyFeature(this, move);
+            this.featureBehavior = null;
+        }
     }
 
-    private void matrixPositionChange(int newGuardX, int newGuardY) {
-        if (this.board.matrixLocationCheck(newGuardX,newGuardY,Location.WALL)) {
+
+    public void matrixPositionChange(int newGuardX, int newGuardY) {
+        if (this.board.matrixLocationCheck(newGuardX, newGuardY, Location.WALL)) {
             return;
+        }
+
+        if (this.board.matrixLocationCheck(newGuardX, newGuardY, Location.FEATURE)) {
+            Random rnd = new Random();
+            int randomFeature = rnd.nextInt(1, 3);
+            if (randomFeature == 1) {
+                System.out.println("Sprint feature active.");
+                this.hasSprint = true;
+            } else {
+                System.out.println("Skateboard feature active.");
+                this.hasSkateBoard = true;
+            }
         }
 
         for (Box box : this.board.getBoxes()) {
@@ -39,9 +73,9 @@ public class GameManager {
                 int newBoxX = box.getX() + (newGuardX - this.board.getGuard().getX());
                 int newBoxY = box.getY() + (newGuardY - this.board.getGuard().getY());
 
-                if (!this.board.matrixLocationCheck(newBoxX,newBoxY,Location.WALL) && !this.board.matrixLocationCheck(newBoxX,newBoxY,Location.BOX)) {
-                    this.board.setMatrixLocation(newBoxX,newBoxY,Location.BOX);
-                    this.board.setMatrixLocation(box.getX(),box.getY(),Location.FLOOR);
+                if (!this.board.matrixLocationCheck(newBoxX, newBoxY, Location.WALL) && !this.board.matrixLocationCheck(newBoxX, newBoxY, Location.BOX)) {
+                    this.board.setMatrixLocation(newBoxX, newBoxY, Location.BOX);
+                    this.board.setMatrixLocation(box.getX(), box.getY(), Location.FLOOR);
                     box.move(newBoxX, newBoxY);
                     break;
                 } else {
@@ -49,11 +83,25 @@ public class GameManager {
                 }
             }
         }
-        this.board.setMatrixLocation(this.board.getGuard().getX(),this.board.getGuard().getY(),Location.FLOOR);
-        this.board.setMatrixLocation(newGuardX,newGuardY,Location.GUARD);
+        this.board.setMatrixLocation(this.board.getGuard().getX(), this.board.getGuard().getY(), Location.FLOOR);
+        this.board.setMatrixLocation(newGuardX, newGuardY, Location.GUARD);
         this.board.getGuard().move(newGuardX, newGuardY);
         GameManager.score++;
+        this.featureCheck();
     }
+
+    public void featureCheck() {
+        if (GameManager.score % 5 == 0) {
+            Random rnd = new Random();
+            int rndX = rnd.nextInt(14);
+            int rndY = rnd.nextInt(14);
+            if (this.board.matrixLocationCheck(rndX, rndY, Location.FLOOR)) {
+                this.board.setMatrixLocation(rndX, rndY, Location.FEATURE);
+                System.out.println("evet floor");
+            }
+        }
+    }
+
 
     public int isFinish() {
         int counter = 0;
@@ -68,7 +116,7 @@ public class GameManager {
     }
 
 
-    public void gameEndMessage(){
+    public void gameEndMessage() {
         System.out.println();
         System.out.println("----------------------------------------------");
         System.out.println();

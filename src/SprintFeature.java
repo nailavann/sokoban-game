@@ -1,15 +1,15 @@
 public class SprintFeature implements FeatureBehavior {
 
     @Override
-    public void applyFeature(Board board, Direction move) {
-        board.featureScore++;
-        if (board.featureScore == 10) {
-            board.hasSprint = false;
-            board.featureScore = 0;
+    public void applyFeature(GameManager manager, Direction move) {
+        manager.featureScore++;
+        if (manager.featureScore == 10) {
+            manager.hasSprint = false;
+            manager.featureScore = 0;
         }
-        int guardX = board.getGuard().getX() + move.getDeltaX() * 2;
-        int guardY = board.getGuard().getY() + move.getDeltaY() * 2;
+        int guardX = manager.board.getGuard().getX() + move.getDeltaX() * 2;
+        int guardY = manager.board.getGuard().getY() + move.getDeltaY() * 2;
 
-        board.guardAndBoxPositionChange(guardX, guardY);
+        manager.matrixPositionChange(guardX, guardY);
     }
 }

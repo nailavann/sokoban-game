@@ -3,7 +3,10 @@ public enum Location {
     WALL(2),
     GUARD(3),
     BOX(4),
-    GOAL(5);
+    GOAL(5),
+
+    FEATURE(6);
+
     private final int value;
 
     Location(int value) {

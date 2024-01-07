@@ -6,6 +6,7 @@ public class BaseBoard {
     private ArrayList<Goal> goals;
     private ArrayList<Floor> floors;
     private ArrayList<Wall> walls;
+    private ArrayList<Feature> features;
 
     private int[][] matrix;
 
@@ -39,7 +40,7 @@ public class BaseBoard {
                     boxes.add(new Box(x, y));
                 } else if (board[x][y] == Location.WALL.getValue()) {
                     walls.add(new Wall(x, y));
-                } else {
+                } else if (board[x][y] == Location.FLOOR.getValue()) {
                     floors.add(new Floor(x, y));
                 }
                 matrix[x][y] = board[x][y];
@@ -71,11 +72,15 @@ public class BaseBoard {
         return walls;
     }
 
-    public void setMatrixLocation(int x ,int y,Location location) {
+    public ArrayList<Feature> getFeatures() {
+        return features;
+    }
+
+    public void setMatrixLocation(int x, int y, Location location) {
         this.matrix[x][y] = location.getValue();
     }
 
-    public boolean matrixLocationCheck(int x, int y, Location location){
+    public boolean matrixLocationCheck(int x, int y, Location location) {
         return this.matrix[x][y] == location.getValue();
     }
 

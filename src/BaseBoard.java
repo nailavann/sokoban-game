@@ -8,6 +8,8 @@ public class BaseBoard {
     private ArrayList<Wall> walls;
     private int[][] matrix;
 
+    private CreateFactory createFactory;
+
     public BaseBoard() {
         boxes = new ArrayList<>();
         floors = new ArrayList<>();
@@ -27,19 +29,19 @@ public class BaseBoard {
 
     public void loadBoard(int[][] board) {
         matrix = new int[board.length][board[0].length];
-
+        this.createFactory = new CreateFactory();
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board[0].length; y++) {
                 if (board[x][y] == Location.GUARD.getValue()) {
-                    guard = new Guard(x, y);
+                    guard = (Guard) this.createFactory.createCell(x, y, board[x][y]);
                 } else if (board[x][y] == Location.GOAL.getValue()) {
-                    goals.add(new Goal(x, y));
+                    goals.add((Goal) this.createFactory.createCell(x, y, board[x][y]));
                 } else if (board[x][y] == Location.BOX.getValue()) {
-                    boxes.add(new Box(x, y));
+                    boxes.add((Box) this.createFactory.createCell(x, y, board[x][y]));
                 } else if (board[x][y] == Location.WALL.getValue()) {
-                    walls.add(new Wall(x, y));
+                    walls.add((Wall) this.createFactory.createCell(x, y, board[x][y]));
                 } else if (board[x][y] == Location.FLOOR.getValue()) {
-                    floors.add(new Floor(x, y));
+                    floors.add((Floor) this.createFactory.createCell(x, y, board[x][y]));
                 }
                 matrix[x][y] = board[x][y];
             }

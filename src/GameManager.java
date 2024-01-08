@@ -34,13 +34,10 @@ public class GameManager {
 
     public void moveGuard(Direction move) {
         if (this.hasSprint) {
-            //sprint feature *2 step
             this.featureBehavior = new SprintFeature();
         } else if (this.hasSkateBoard) {
-            //skateboard feature
             this.featureBehavior = new SkateBoardFeature();
         } else {
-            //not feature
             this.matrixPositionChange(this.board.getGuard().getX() + move.getDeltaX(), this.board.getGuard().getY() + move.getDeltaY());
         }
 
@@ -93,12 +90,11 @@ public class GameManager {
     public void featureCheck() {
         if (GameManager.score % 5 == 0) {
             Random rnd = new Random();
-            int rndX = rnd.nextInt(14);
-            int rndY = rnd.nextInt(14);
-            if (this.board.matrixLocationCheck(rndX, rndY, Location.FLOOR)) {
-                this.board.setMatrixLocation(rndX, rndY, Location.FEATURE);
-                System.out.println("evet floor");
-            }
+            int randomIndex = rnd.nextInt(this.board.getFloors().size());
+            Floor floor = this.board.getFloors().get(randomIndex);
+            System.out.println(floor.getX());
+            System.out.println(floor.getY());
+            this.board.setMatrixLocation(floor.getX(), floor.getY(), Location.FEATURE);
         }
     }
 

@@ -6,8 +6,6 @@ public class BaseBoard {
     private ArrayList<Goal> goals;
     private ArrayList<Floor> floors;
     private ArrayList<Wall> walls;
-    private ArrayList<Feature> features;
-
     private int[][] matrix;
 
     public BaseBoard() {
@@ -63,9 +61,8 @@ public class BaseBoard {
         return goals;
     }
 
-
-    public ArrayList<Feature> getFeatures() {
-        return features;
+    public ArrayList<Floor> getFloors() {
+        return floors;
     }
 
     public void setMatrixLocation(int x, int y, Location location) {

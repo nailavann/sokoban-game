@@ -92,8 +92,6 @@ public class GameManager {
             Random rnd = new Random();
             int randomIndex = rnd.nextInt(this.board.getFloors().size());
             Floor floor = this.board.getFloors().get(randomIndex);
-            System.out.println(floor.getX());
-            System.out.println(floor.getY());
             this.board.setMatrixLocation(floor.getX(), floor.getY(), Location.FEATURE);
         }
     }
